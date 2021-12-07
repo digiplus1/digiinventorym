@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-card class="ion-no-border">
+    <ion-card-header slot="end">
+      <ion-icon  (click)="closepaiement()" name="close-outline"></ion-icon>
+    </ion-card-header>
+    <ion-card-content class="ion-text-center">
+      <h5 class="card-title "><b>{{immo.immobilisation.description}}</b></h5>
+      <ion-row>
+        <ion-col size="3">
+          <ion-icon size="large" color="danger" name="remove-circle-outline"></ion-icon>
+        </ion-col>
+        <ion-col>
+          <ion-input type="number" placeholder="Entrer la quantité" [(ngModel)]="inventairesoumi.quantite" ></ion-input>
+        </ion-col>
+        <ion-col size="3">
+          <ion-icon  size="large" color="success" name="add-circle-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+    <ion-card-subtitle class="text-center">
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <ion-button size="small" type="button" [disabled]="is_loading==true" (click)="valider()">Valider
+            <ion-spinner name="lines" *ngIf="is_loading"></ion-spinner>
+          </ion-button>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+
+    </ion-card-subtitle>
+  </ion-card>
+</ion-content>

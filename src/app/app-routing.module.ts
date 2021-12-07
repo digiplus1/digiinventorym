@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'elementinventory',
+    loadChildren: () => import('./operateur/elementinventory/elementinventory.module').then( m => m.ElementinventoryPageModule)
+  },
+  {
+    path: 'menuoperateur',
+    loadChildren: () => import('./operateur/menuoperateur/menuoperateur.module').then( m => m.MenuoperateurPageModule)
+  },
 ];
 
 @NgModule({

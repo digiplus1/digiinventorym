@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label class="ion-text-center">
+        <strong>{{inventaireService.loginService.userLogin.nomentreprise}}</strong>
+        <p>{{inventaireService.loginService.userLogin.uniteentreprise}}</p>
+      </ion-label>
+    </ion-title>
+    <ion-avatar slot="end">
+      <ion-img src="./assets/icon/favicon.png"></ion-img>
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="inventairepage">
+    <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of inventairepage.results" >
+      <ion-item button lines="none" class="ion-no-margin ion-no-padding"  >
+        <ion-label>
+          <strong>{{i.immobilisation.libelle}}</strong>
+          <p>{{i.immobilisation.description}}</p>
+          {{i.immobilisation.marque}}
+        </ion-label>
+        <ion-icon (click)="scannerbarcode()" size="large" color="danger" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
+        <ion-icon (click)="modalimmobilisation(i)" size="large" class="ion-no-margin ion-no-padding" color="primary" name="add-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+
+  <div class="empty-cart" *ngIf="!inventaireService.loginService.userLogin.referencesession">
+    <ion-icon color="danger" name="ban-outline"></ion-icon>
+    <p>Aucune session encours</p>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col></ion-col>
+    <ion-col>
+      <ion-button (click)="validerInventaire()">Valider</ion-button>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+</ion-footer>

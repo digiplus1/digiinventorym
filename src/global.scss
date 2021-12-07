@@ -24,3 +24,18 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.modalimmobilisation{
+  --max-height:25%;
+  --border-radius: 25px;
+  padding: 15px;
+}
+.toasterror{
+  --background: #cf3c4f;
+  width: 50%;
+}
+
+.toastsuccess{
+  width: 50%;
+  --background: #2dd36f;
+}

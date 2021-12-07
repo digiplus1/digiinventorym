@@ -1,0 +1,41 @@
+<ion-content>
+  <div id="header">
+    <h1>Connexion</h1>
+    <img src="./assets/icon/favicon.png">
+  </div>
+  <form id="form" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input formControlName="email" placeholder="email" type="email"
+                 [ngClass]="{ 'is-invalid': submittedRegister && g.email.errors }"></ion-input>
+      <ion-icon slot="end" color="primary" name="person-outline"></ion-icon>
+    </ion-item>
+    <ion-text class="ion-text-left" color="danger" *ngIf="submittedRegister && g.email.errors">
+      <p class="error" *ngIf="g.email.errors.required">*email est obligatoire</p>
+    </ion-text>
+
+    <ion-item lines="none" class="ion-margin-bottom">
+      <ion-input [type]="isTypePassword?'password':'text'" formControlName="password" placeholder="password"></ion-input>
+      <ion-icon (click)="onChange()" [name]="isTypePassword? 'eye-off-outline':'eye-outline'" slot="end"
+                [color]="isTypePassword?'medium':'primary'"></ion-icon>
+    </ion-item>
+    <ion-text class="ion-text-left" color="danger"
+              *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
+      <p class="error" *ngIf="g.password.invalid && g.password.errors.required">
+        * S'il vous plait entrez votre mot de passe </p>
+      <p class="error" *ngIf="g.password.dirty">* Le mot de passe doit comporter au moins 8 caractères</p>
+    </ion-text>
+    <ion-button expand="block" [disabled]="is_loading==true" (keydown.enter)="onRegister()" color="primary" shape="round" type="submit">
+      Se connecter
+      <ion-spinner name="lines" *ngIf="is_loading"></ion-spinner>
+    </ion-button>
+  </form>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="primary">
+        <a routerLink="/home/forgot-password">  Mot de passe oublié</a>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-content>
+
+
