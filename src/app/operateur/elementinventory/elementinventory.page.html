@@ -13,20 +13,27 @@
       <ion-img src="./assets/icon/favicon.png"></ion-img>
     </ion-avatar>
   </ion-toolbar>
-</ion-header>
+  <ion-label class="progresse ion-margin-top" *ngIf="inventaireService.evolutionInventaire">
+    <ion-progress-bar color="warning" class="ion-margin-top" [buffer]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total" [value]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total"></ion-progress-bar>
+    <ion-label color="success">{{inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total | percent}}</ion-label>
+  </ion-label>
+  <ion-searchbar #searchbar debounce="500" (ionChange)="ionChange($event)" placeholder="Que cherchez vous ..."></ion-searchbar>
 
+</ion-header>
 <ion-content>
-  <ion-grid *ngIf="inventairepage">
-    <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of inventairepage.results" >
+  <ion-grid *ngIf="inventaireService.inventaires">
+    <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of searcheItem" >
       <ion-item button lines="none" class="ion-no-margin ion-no-padding"  >
+        <ion-icon slot="end"  class="ion-margin-bottom ion-padding-bottom" [color]="i.etat=='en_cours'?'success':'danger'" size="small" [name]="i.etat=='en_cours'?'checkmark-circle-outline':'close-circle-outline'"></ion-icon>
         <ion-label>
           <strong>{{i.immobilisation.libelle}}</strong>
           <p>{{i.immobilisation.description}}</p>
           {{i.immobilisation.marque}}
         </ion-label>
-        <ion-icon (click)="scannerbarcode()" size="large" color="danger" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
-        <ion-icon (click)="modalimmobilisation(i)" size="large" class="ion-no-margin ion-no-padding" color="primary" name="add-outline"></ion-icon>
+        <ion-icon (click)="scannerbarcode()" color="warning" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
+        <ion-icon (click)="modalimmobilisation(i)"  class="ion-no-margin ion-no-padding" color="primary" name="add-outline"></ion-icon>
       </ion-item>
+
     </ion-list>
   </ion-grid>
 
@@ -39,7 +46,9 @@
   <ion-row>
     <ion-col></ion-col>
     <ion-col>
-      <ion-button (click)="validerInventaire()">Valider</ion-button>
+      <ion-button [disabled]="is_loading==true"  (click)="cloturerInventaire()">Cloturer
+        <ion-spinner name="lines" *ngIf="is_loading"></ion-spinner>
+      </ion-button>
     </ion-col>
     <ion-col></ion-col>
   </ion-row>

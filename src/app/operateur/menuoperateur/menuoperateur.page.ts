@@ -11,12 +11,7 @@ export class MenuoperateurPage implements OnInit {
 
   menu = [
     {title:"Acceuil",url:"menuoperateur/acceuil",icon:"home-outline",status:'active'},
-    {title:"Test en cours",url:"menuoperateur/test",icon:"layers-outline",status:'none'},
-    {title:"Historique",url:"client/menuclient/historique",icon:"archive-outline",status:'none'},
-    {title:"Partager",url:"socialshare",icon:"share-social-outline",status:'none'},
-    {title:"Coupon",url:"client/menuclient/coupon",icon:"ear-outline",status:'none'},
-    {title:"Profil",url:"client/menuclient/profil",icon:"people-outline",status:'none'},
-    {title:"A propos",url:"client/menuclient/apropos",icon:"information-outline",status:'none'},
+    {title:"A propos",url:"menuoperateur/apropos",icon:"information-outline",status:'none'},
     {title:"Déconnexion",url:"/home/login",icon:"exit-outline"},
   ]
   constructor(public loginService: LoginService,public router:Router) { }

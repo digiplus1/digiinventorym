@@ -30,12 +30,16 @@
   --border-radius: 25px;
   padding: 15px;
 }
-.toasterror{
+.error{
   --background: #cf3c4f;
-  width: 50%;
+  width: 75%;
 }
 
-.toastsuccess{
-  width: 50%;
+.success{
+  width: 75%;
   --background: #2dd36f;
+}
+.info{
+  width: 75%;
+  --background: lightseagreen;
 }

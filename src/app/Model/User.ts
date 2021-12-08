@@ -18,4 +18,7 @@ export class User {
   admin: boolean = false;
   confirm_password!: string;
   referencesession:string;
+  superviseur:string;
+  responsableunite:string;
+  contactsuperviseur:string;
 }

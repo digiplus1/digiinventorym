@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'menuoperateur',
     loadChildren: () => import('./operateur/menuoperateur/menuoperateur.module').then( m => m.MenuoperateurPageModule)
   },
+  {
+    path: 'apropos',
+    loadChildren: () => import('./operateur/apropos/apropos.module').then( m => m.AproposPageModule)
+  },
 ];
 
 @NgModule({
