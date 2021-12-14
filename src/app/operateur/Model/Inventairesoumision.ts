@@ -2,6 +2,7 @@ export class Inventairesoumision{
   referenceInventaire:string;
   referenceimmobilisation:string;
   quantite:number=0;
+  commentaire:string;
   longitude:number;
   lattitude:number;
   annuler:boolean;//cett permet d'annuler une immo

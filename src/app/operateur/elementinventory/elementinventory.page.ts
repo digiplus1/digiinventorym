@@ -44,7 +44,7 @@ export class ElementinventoryPage implements OnInit {
   scannerbarcode() {
     this.barcodeScanner.scan().then(barcodeData => {
       alert(barcodeData.text);
-      let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.reference == barcodeData.text);
+      let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
 
       if (inventaire.immobilisation.is_generique) {
         this.modalimmobilisation(inventaire);
@@ -63,7 +63,7 @@ export class ElementinventoryPage implements OnInit {
                 }
               }
             )
-
+            this.inventaireService.getEvolution();
 
           }, error => {
           }
