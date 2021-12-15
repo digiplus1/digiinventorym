@@ -44,33 +44,40 @@ export class ElementinventoryPage implements OnInit {
 
   scannerbarcode() {
     this.barcodeScanner.scan().then(barcodeData => {
-      alert(barcodeData.text);
       let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
 
-      if (inventaire.immobilisation.is_generique) {
-        this.modalimmobilisation(inventaire);
-      } else {
-        let invensoumission: Inventairesoumision = new Inventairesoumision();
-        invensoumission.referenceimmobilisation = inventaire.immobilisation.reference;
-        invensoumission.referenceInventaire = inventaire.referenceInventaire;
-        invensoumission.quantite = 1
-        this.inventaireService.valideImmo(invensoumission, inventaire.id).subscribe(
-          data => {
+      if (inventaire){
+        if (inventaire.immobilisation.is_generique) {
+          this.modalimmobilisation(inventaire);
+        } else {
+          if (inventaire.etat=="initial"){
+            let invensoumission: Inventairesoumision = new Inventairesoumision();
+            invensoumission.referenceimmobilisation = inventaire.immobilisation.reference;
+            invensoumission.referenceInventaire = inventaire.referenceInventaire;
+            invensoumission.quantite = 1
+            this.inventaireService.valideImmo(invensoumission, inventaire.id).subscribe(
+              data => {
 
-            this.inventaireService.inventaires.forEach(i => {
-                if (i.referenceInventaire == data.referenceInventaire) {
-                  i.quantite = data.quantite
-                  i.etat = "en_cours";
-                }
+                this.inventaireService.inventaires.forEach(i => {
+                    if (i.referenceInventaire == data.referenceInventaire) {
+                      i.quantite = data.quantite
+                      i.etat = "en_cours";
+                    }
+                  }
+                )
+                this.inventaireService.getEvolution();
+
+              }, error => {
               }
             )
-            this.inventaireService.getEvolution();
+          }else {
+            this.inventaireService.loginService.toastMessage("Immobilisation unique et deja inventoriée","info")
 
-          }, error => {
           }
-        )
+        }
+      }else {
+        this.inventaireService.loginService.toastMessage("Immobilisation non trouvée","info")
       }
-
     }).catch(err => {
       console.log('Error', err);
     });
@@ -82,7 +89,8 @@ export class ElementinventoryPage implements OnInit {
       cssClass: "modalimmobilisation",
       componentProps: {
         'immo': cT
-      }
+      },
+      backdropDismiss:false
     });
     return await modal.present();
   }

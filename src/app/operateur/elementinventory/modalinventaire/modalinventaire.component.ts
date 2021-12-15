@@ -25,7 +25,7 @@ export class ModalinventaireComponent implements OnInit {
     this.inventairesoumi.quantite = this.immo.quantite;
   }
 
-  closepaiement() {
+  closeModal() {
     this.modalController.dismiss();
   }
 
