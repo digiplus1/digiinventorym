@@ -17,9 +17,13 @@
     <ion-progress-bar color="warning" class="ion-margin-top" [buffer]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total" [value]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total"></ion-progress-bar>
     <ion-label color="success">{{inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total | percent}}</ion-label>
   </ion-label>
-  <ion-searchbar #searchbar debounce="500" (ionChange)="ionChange($event)" placeholder="Que cherchez vous ..."></ion-searchbar>
-
+  <ion-item>
+    <ion-icon (click)="scannerbarcode()" size="large" color="warning" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
+    <ion-searchbar (ionChange)="ionChange($event)" placeholder="Que cherchez vous ..."></ion-searchbar>
+  </ion-item>
 </ion-header>
+
+
 <ion-content>
   <ion-grid *ngIf="inventaireService.inventaires">
     <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of searcheItem" >
@@ -30,13 +34,19 @@
           <p>{{i.immobilisation.description}}</p>
           {{i.immobilisation.marque}}
         </ion-label>
-        <ion-icon (click)="scannerbarcode()" color="warning" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
-        <ion-icon (click)="modalimmobilisation(i)"  class="ion-no-margin ion-no-padding" color="primary" name="add-outline"></ion-icon>
+        <ion-icon size="large" (click)="modalimmobilisation(i)"  class="ion-no-margin ion-no-padding" color="primary" name="contract-outline"></ion-icon>
       </ion-item>
 
     </ion-list>
 
   </ion-grid>
+
+
+  <div class="loading" *ngIf="!inventaireService.inventaires">
+    <ion-spinner name="lines"></ion-spinner>
+    <p>Chargement en cours</p>
+  </div>
+
 
   <div class="empty-cart" *ngIf="!inventaireService.loginService.userLogin.referencesession">
     <ion-icon color="danger" name="ban-outline"></ion-icon>

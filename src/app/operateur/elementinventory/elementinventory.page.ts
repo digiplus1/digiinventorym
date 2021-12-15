@@ -9,6 +9,7 @@ import {EvolutionInventaire} from "../Model/EvolutionInventaire";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {Inventairesoumision} from "../Model/Inventairesoumision";
 import {ClotureOperateur} from "../Model/ClotureOperateur";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-elementinventory',
@@ -20,7 +21,7 @@ export class ElementinventoryPage implements OnInit {
   is_loading: boolean;
 
   constructor(private modalController: ModalController, private barcodeScanner: BarcodeScanner,
-              public inventaireService: InventaireService) {
+              public inventaireService: InventaireService,public router:Router) {
   }
 
 
@@ -124,6 +125,7 @@ export class ElementinventoryPage implements OnInit {
       data => {
         this.is_loading = false;
         this.inventaireService.inventaires = null;
+        this.router.navigateByUrl("home")
       }, error => {
         this.is_loading = false;
         console.log(error)
