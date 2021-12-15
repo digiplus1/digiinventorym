@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { MenuoperateurPageRoutingModule } from './menuoperateur-routing.module';
 
 import { MenuoperateurPage } from './menuoperateur.page';
-import {TestnavigationComponent} from "../testnavigation/testnavigation.component";
-import {ElementinventoryPage} from "../elementinventory/elementinventory.page";
 import {ElementinventoryPageModule} from "../elementinventory/elementinventory.module";
 
 @NgModule({
@@ -19,7 +17,7 @@ import {ElementinventoryPageModule} from "../elementinventory/elementinventory.m
     MenuoperateurPageRoutingModule,
     ElementinventoryPageModule,
   ],
-  exports:[TestnavigationComponent],
-  declarations: [MenuoperateurPage,TestnavigationComponent,]
+  exports:[],
+  declarations: [MenuoperateurPage,]
 })
 export class MenuoperateurPageModule {}

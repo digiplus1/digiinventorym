@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">digiinventory</string>
-    <string name="title_activity_main">digiinventory</string>
-    <string name="package_name">ftg.digixpress.digiinventory</string>
-    <string name="custom_url_scheme">ftg.digixpress.digiinventory</string>
-</resources>
