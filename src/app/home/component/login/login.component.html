@@ -1,7 +1,7 @@
 <ion-content>
   <div id="header">
     <h1>Connexion</h1>
-    <img src="./assets/icon/favicon.png">
+    <img src="assets/logo/logodigi.webp">
   </div>
   <form id="form" [formGroup]="registerForm" (ngSubmit)="onRegister()">
     <ion-item lines="none" class="ion-margin-bottom">
@@ -29,13 +29,13 @@
       <ion-spinner name="lines" *ngIf="is_loading"></ion-spinner>
     </ion-button>
   </form>
-  <ion-toolbar>
+  <!--<ion-toolbar>
     <ion-buttons slot="end">
       <ion-button color="primary">
         <a routerLink="/home/forgot-password">  Mot de passe oublié</a>
       </ion-button>
     </ion-buttons>
-  </ion-toolbar>
+  </ion-toolbar>-->
 </ion-content>
 
 
