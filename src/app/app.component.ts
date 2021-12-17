@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {LoginService} from "./home/component/Service/LoginService";
+import {NetworkService} from "./Service/NetworkService";
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,12 @@ import {LoginService} from "./home/component/Service/LoginService";
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(public loginService:LoginService) {
+  constructor(public loginService:LoginService,public networkService:NetworkService) {
     this.loging();
   }
 
   loging(){
+    this.networkService.initializeNetworkEvents();
     this.loginService.verifierLocalStorage();
   }
 }

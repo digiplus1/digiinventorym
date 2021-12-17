@@ -11,6 +11,8 @@ import {LoginService} from "./home/component/Service/LoginService";
 import {HttpClientModule} from "@angular/common/http";
 import {InventaireService} from "./operateur/service/InventaireService";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import {NetworkService} from "./Service/NetworkService";
+import {Network} from "@ionic-native/network/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
     LoginService,
     InventaireService,
     BarcodeScanner,
+    NetworkService,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
