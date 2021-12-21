@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {InventaireService} from "../service/InventaireService";
-import {InventairePage} from "../Model/InventairePage";
 import {ModalController} from "@ionic/angular";
-import {Immobilisation} from "../Model/Immobilisation";
 import {ModalinventaireComponent} from "./modalinventaire/modalinventaire.component";
 import {Inventaire} from "../Model/Inventaire";
-import {EvolutionInventaire} from "../Model/EvolutionInventaire";
-import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
+import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scanner/ngx";
 import {Inventairesoumision} from "../Model/Inventairesoumision";
 import {ClotureOperateur} from "../Model/ClotureOperateur";
 import {Router} from "@angular/router";
@@ -43,7 +40,19 @@ export class ElementinventoryPage implements OnInit {
   }
 
   scannerbarcode() {
-    this.barcodeScanner.scan().then(barcodeData => {
+    //https://enappd.com/blog/ionic-complete-guide-barcode-qrcode-scan/140/
+    let options: BarcodeScannerOptions = {
+      preferFrontCamera: false,
+      showFlipCameraButton: true,
+      showTorchButton: true,
+      torchOn: false,
+      prompt: 'Place a barcode inside the scan area',
+      resultDisplayDuration: 500,
+      formats: 'EAN_13,EAN_8,QR_CODE,PDF_417 ',
+      orientation: 'portrait',
+    };
+
+    this.barcodeScanner.scan(options).then(barcodeData => {
       let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
 
       if (inventaire){
