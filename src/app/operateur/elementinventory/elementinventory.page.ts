@@ -19,6 +19,7 @@ export class ElementinventoryPage implements OnInit {
 
   constructor(private modalController: ModalController, private barcodeScanner: BarcodeScanner,
               public inventaireService: InventaireService,public router:Router) {
+
   }
 
 
@@ -40,7 +41,7 @@ export class ElementinventoryPage implements OnInit {
   }
 
   scannerbarcode() {
-    //https://enappd.com/blog/ionic-complete-guide-barcode-qrcode-scan/140/
+   /* //https://enappd.com/blog/ionic-complete-guide-barcode-qrcode-scan/140/
     let options: BarcodeScannerOptions = {
       preferFrontCamera: false,
       showFlipCameraButton: true,
@@ -50,9 +51,9 @@ export class ElementinventoryPage implements OnInit {
       resultDisplayDuration: 500,
       formats: 'EAN_13,EAN_8,QR_CODE,PDF_417 ',
       orientation: 'portrait',
-    };
+    };*/
 
-    this.barcodeScanner.scan(options).then(barcodeData => {
+    this.barcodeScanner.scan().then(barcodeData => {
       let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
 
       if (inventaire){
@@ -64,7 +65,7 @@ export class ElementinventoryPage implements OnInit {
             invensoumission.referenceimmobilisation = inventaire.immobilisation.reference;
             invensoumission.referenceInventaire = inventaire.referenceInventaire;
             invensoumission.quantite = 1
-            this.inventaireService.valideImmo(invensoumission, inventaire.id).subscribe(
+            this.inventaireService.valideImmo(invensoumission, inventaire.id,this.inventaireService.offline).subscribe(
               data => {
 
                 this.inventaireService.inventaires.forEach(i => {
@@ -148,5 +149,12 @@ export class ElementinventoryPage implements OnInit {
         console.log(error)
       }
     )
+  }
+
+  offLineMode() {
+    this.inventaireService.offline=!this.inventaireService.offline
+    if (!this.inventaireService.offline){
+      this.inventaireService.validerModeOffline()
+    }
   }
 }

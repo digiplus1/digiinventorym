@@ -13,7 +13,6 @@ export class AppComponent {
   }
 
   loging(){
-    this.networkService.initializeNetworkEvents();
     this.loginService.verifierLocalStorage();
   }
 }

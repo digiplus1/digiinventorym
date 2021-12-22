@@ -31,7 +31,7 @@ export class ModalinventaireComponent implements OnInit {
 
   valider() {
     this.is_loading = true;
-    this.inventaireService.valideImmo(this.inventairesoumi, this.immo.id).subscribe(
+    this.inventaireService.valideImmo(this.inventairesoumi, this.immo.id,this.inventaireService.offline).subscribe(
       data => {
         this.inventaireService.inventaires.forEach(i => {
           if (i.referenceInventaire == data.referenceInventaire) {
