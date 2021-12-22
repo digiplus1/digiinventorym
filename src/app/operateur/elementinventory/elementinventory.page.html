@@ -28,7 +28,7 @@
 <ion-content>
   <ion-grid *ngIf="inventaireService.inventaires">
     <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of searcheItem" >
-      <ion-item [disabled]="!i.immobilisation.is_generique" button lines="none" class="ion-no-margin ion-no-padding" (click)="modalimmobilisation(i)" >
+      <ion-item  button lines="none" class="ion-no-margin ion-no-padding" (click)="modalimmobilisation(i)" >
         <ion-icon slot="end"  class="ion-margin-bottom ion-padding-bottom" [color]="i.etat=='en_cours'?'success':'danger'" size="small" [name]="i.etat=='en_cours'?'checkmark-circle-outline':'close-circle-outline'"></ion-icon>
         <ion-label>
           <strong>{{i.immobilisation.libelle}}</strong>
