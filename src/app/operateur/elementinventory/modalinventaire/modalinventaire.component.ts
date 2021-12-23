@@ -30,22 +30,8 @@ export class ModalinventaireComponent implements OnInit {
   }
 
   valider() {
-    this.is_loading = true;
-    this.inventaireService.valideImmo(this.inventairesoumi, this.immo.id,this.inventaireService.offline).subscribe(
-      data => {
-        this.inventaireService.inventaires.forEach(i => {
-          if (i.referenceInventaire == data.referenceInventaire) {
-            i.quantite = data.quantite
-            i.etat = "en_cours";
-          }
-        })
-        this.modalController.dismiss();
-        this.is_loading = false;
-        this.getEvolution();
-      }, error => {
-        this.is_loading = false;
-      }
-    )
+    this.inventaireService.valideImmo(this.inventairesoumi, this.immo.id);
+    this.modalController.dismiss();
   }
 
   getEvolution() {

@@ -1,10 +1,14 @@
 <ion-content>
   <ion-card class="ion-no-border">
-    <ion-card-content class="ion-text-center">
+    <ion-card-content>
      <ion-item lines="none">
        <ion-icon slot="end" color="danger" (click)="closeModal()" name="close-outline"></ion-icon>
-       <ion-label class="card-title "><b>{{immo.immobilisation.description+":"+immo.immobilisation.codeBarre}}</b></ion-label>
+       <ion-label class="card-title "><b>{{immo.immobilisation.libelle}}</b></ion-label>
      </ion-item>
+      <ion-label >
+        <p>Description: {{immo.immobilisation.description}}</p>
+        <p>Marque: {{immo.immobilisation.marque}}</p>
+      </ion-label>
       <ion-row>
         <ion-col size="3">
           <ion-icon size="large" (click)="mouvement('remove')" color="danger" name="remove-circle-outline"></ion-icon>
@@ -22,8 +26,7 @@
       <ion-row>
         <ion-col></ion-col>
         <ion-col>
-          <ion-button size="small" type="button" [disabled]="is_loading==true" (click)="valider()">Valider
-            <ion-spinner name="lines" *ngIf="is_loading"></ion-spinner>
+          <ion-button size="small" type="button"  (click)="valider()">Valider
           </ion-button>
         </ion-col>
         <ion-col></ion-col>

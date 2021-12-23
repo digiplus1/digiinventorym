@@ -22,8 +22,8 @@ export class ElementinventoryPage implements OnInit {
 
   }
 
-
   ngOnInit() {
+
     this.getimmo();
     this.getEvolution();
   }
@@ -65,21 +65,7 @@ export class ElementinventoryPage implements OnInit {
             invensoumission.referenceimmobilisation = inventaire.immobilisation.reference;
             invensoumission.referenceInventaire = inventaire.referenceInventaire;
             invensoumission.quantite = 1
-            this.inventaireService.valideImmo(invensoumission, inventaire.id,this.inventaireService.offline).subscribe(
-              data => {
-
-                this.inventaireService.inventaires.forEach(i => {
-                    if (i.referenceInventaire == data.referenceInventaire) {
-                      i.quantite = data.quantite
-                      i.etat = "en_cours";
-                    }
-                  }
-                )
-                this.inventaireService.getEvolution();
-
-              }, error => {
-              }
-            )
+            this.inventaireService.valideImmo(invensoumission, inventaire.id)
           }else {
             this.inventaireService.loginService.toastMessage("Immobilisation unique et deja inventoriée","info")
 
@@ -152,9 +138,9 @@ export class ElementinventoryPage implements OnInit {
   }
 
   offLineMode() {
-    this.inventaireService.offline=!this.inventaireService.offline
-    if (!this.inventaireService.offline){
-      this.inventaireService.validerModeOffline()
+    this.inventaireService.onLine=!this.inventaireService.onLine
+    if (!this.inventaireService.onLine){
+
     }
   }
 }

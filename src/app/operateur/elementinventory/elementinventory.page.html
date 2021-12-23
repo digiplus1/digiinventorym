@@ -10,11 +10,10 @@
       </ion-label>
     </ion-title>
     <ion-label slot="end" class=" ion-margin-end">
-      <p><ion-label>{{inventaireService.offline?'Off line':'One line'}}</ion-label></p>
-      <ion-icon size="large" [color]="inventaireService.offline?'danger':'success'" [name]="inventaireService.offline?'thumbs-down-outline':'thumbs-up-outline'" (click)="offLineMode()"></ion-icon>
+      <p><ion-label [color]="inventaireService.onLine?'success':'danger'">{{inventaireService.onLine?'Online':'Offline'}}</ion-label></p>
     </ion-label>
   </ion-toolbar>
-  <ion-label class="progresse ion-margin-top" *ngIf="inventaireService.evolutionInventaire">
+  <ion-label class="progresse ion-margin-top" *ngIf="inventaireService.evolutionInventaire && inventaireService.onLine">
     <ion-progress-bar color="warning" class="ion-margin-top" [buffer]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total" [value]="inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total"></ion-progress-bar>
     <ion-label color="danger">{{inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total | percent}}</ion-label>
   </ion-label>

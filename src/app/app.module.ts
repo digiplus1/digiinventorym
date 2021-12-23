@@ -13,6 +13,7 @@ import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import {NetworkService} from "./Service/NetworkService";
 import {Network} from "@ionic-native/network/ngx";
 import {Storage} from "@ionic/storage";
+import {Dialogs} from "@ionic-native/dialogs/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import {Storage} from "@ionic/storage";
     NetworkService,
     Network,
     Storage,
+    Dialogs,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

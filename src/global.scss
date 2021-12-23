@@ -29,6 +29,8 @@
   --max-height:43%;
   --border-radius: 25px;
   padding: 15px;
+  position: fixed;
+  align-items: flex-start;
 }
 .error{
   --background: #cf3c4f;
