@@ -26,24 +26,22 @@ export class InventaireService {
       dialogs.alert("Network was disconnected")
       this.onLine=false;
     })
-// stop disconnect watch
-    disconnectSubscription.unsubscribe();
+
 
 
     let connectSubscription =  this.network.onConnect().subscribe(()=>{
       dialogs.alert("we got a "+this.network.type+" connection");
       this.onLine=true;
     })
-    // stop connect watch
-    connectSubscription.unsubscribe();
+
     this.offlineSubscription=this.offlineObserve.subscribe(
       off=>{
         this.onLine=off;
       }
     )
- /*  setInterval(()=>{
+  setInterval(()=>{
      this.emitofflineSubject();
-   },1000)*/
+   },1000)
   }
   emitofflineSubject() {
     // @ts-ignore
