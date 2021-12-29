@@ -10,10 +10,9 @@ import {LoginService} from "./home/component/Service/LoginService";
 import {HttpClientModule} from "@angular/common/http";
 import {InventaireService} from "./operateur/service/InventaireService";
 import {BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
-import {NetworkService} from "./Service/NetworkService";
-import {Network} from "@ionic-native/network/ngx";
 import {Storage} from "@ionic/storage";
 import {Dialogs} from "@ionic-native/dialogs/ngx";
+import {Network} from "@awesome-cordova-plugins/network/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +27,6 @@ import {Dialogs} from "@ionic-native/dialogs/ngx";
     LoginService,
     InventaireService,
     BarcodeScanner,
-    NetworkService,
     Network,
     Storage,
     Dialogs,

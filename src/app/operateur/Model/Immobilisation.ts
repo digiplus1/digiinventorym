@@ -14,4 +14,6 @@ export class Immobilisation{
   is_active:boolean;
   created_at:Date;
   codeBarre:string;
+  referenceoperateur:string;
+  referencesession:string;
 }

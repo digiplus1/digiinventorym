@@ -18,6 +18,10 @@ const routes: Routes = [
         path:'apropos',
         component:AproposPage
       },
+      {
+        path: 'equipement',
+        loadChildren: () => import('../equipement/equipement.module').then( m => m.EquipementPageModule)
+      },
     ]
   }
 ];

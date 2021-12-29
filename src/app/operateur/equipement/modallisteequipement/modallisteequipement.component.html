@@ -1,0 +1,24 @@
+<ion-content *ngIf="immobilisations">
+  <ion-grid>
+    <ion-card>
+      <ion-card-header>
+        <ion-label color="primary" (click)="closeModal()">Fermer</ion-label>
+      </ion-card-header>
+      <ion-card-title class="ion-text-center">
+        Liste des Nouvelles equipements trouvés
+      </ion-card-title>
+      <ion-card-content>
+        <ion-list class="ion-no-margin ion-no-padding"  *ngFor="let i of immobilisations" >
+          <ion-item lines="none" class="ion-no-margin ion-no-padding"  >
+            <ion-label>
+              <strong>{{i.libelle}}</strong>
+              <p>Description :{{i.description}}</p>
+              {{i.marque}}
+              <p>Quantité: {{i.quantite}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

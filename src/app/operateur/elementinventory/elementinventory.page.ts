@@ -7,6 +7,7 @@ import {BarcodeScanner, BarcodeScannerOptions} from "@ionic-native/barcode-scann
 import {Inventairesoumision} from "../Model/Inventairesoumision";
 import {ClotureOperateur} from "../Model/ClotureOperateur";
 import {Router} from "@angular/router";
+import {Immobilisation} from "../Model/Immobilisation";
 
 @Component({
   selector: 'app-elementinventory',
@@ -23,6 +24,15 @@ export class ElementinventoryPage implements OnInit {
   }
 
   ngOnInit() {
+  /*  this.inventaireService.offlineSubscription=this.inventaireService.offlineObserve.subscribe(
+      off=>{
+        this.inventaireService.onLine=off;
+      }
+    )*/
+    this.inventaireService.testConnexion();
+    setInterval(()=>{
+      this.inventaireService.testConnexion();
+    },2000)
 
     this.getimmo();
     this.getEvolution();
@@ -54,7 +64,13 @@ export class ElementinventoryPage implements OnInit {
     };*/
 
     this.barcodeScanner.scan().then(barcodeData => {
-      let inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
+        let inven:Immobilisation=JSON.parse(barcodeData.text);
+      let inventaire:Inventaire=new Inventaire();
+      if (inven.codeBarre){
+         inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == inven.codeBarre);
+      }else {
+        inventaire = this.inventaireService.inventaires.find(i => i.immobilisation.codeBarre == barcodeData.text);
+      }
 
       if (inventaire){
         if (inventaire.immobilisation.is_generique) {
@@ -138,9 +154,6 @@ export class ElementinventoryPage implements OnInit {
   }
 
   offLineMode() {
-    this.inventaireService.onLine=!this.inventaireService.onLine
-    if (!this.inventaireService.onLine){
-
-    }
+    this.inventaireService.testConnexion();
   }
 }

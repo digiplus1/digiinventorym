@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label class="ion-text-center">
+        <p>{{inventaireService.loginService.userLogin.nomentreprise}}</p>
+        <p>{{inventaireService.loginService.userLogin.uniteentreprise}}</p>
+      </ion-label>
+    </ion-title>
+    <ion-label slot="end" class=" ion-margin-end">
+      <ion-icon color="primary" (click)="getAllNouvelleInventaire()" size="large" name="reader-outline"></ion-icon>
+      <ion-icon slot="end" (click)="scannerbarcode()" size="large" color="warning" class="ion-margin-start" name="scan-circle-outline"></ion-icon>
+    </ion-label>
+  </ion-toolbar>
+
+  <ion-item>
+  </ion-item>
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="ion-align-items-center ion-text-center">
+      <ion-label>Enregistrement d'un équipement trouvé {{immobilisation.id?immobilisation.id:''}}</ion-label>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="full">
+        <ion-label position="floating">Nom de l'équipement</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.libelle"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Description</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.description"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Marque</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.marque"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">CodeBarre</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.codeBarre"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Emplacement</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.emplacement1"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Etat</ion-label>
+        <ion-input type="text" [(ngModel)]="immobilisation.etat"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Quantité</ion-label>
+        <ion-input type="number" [(ngModel)]="immobilisation.quantite"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button [disabled]="is_loading==true" color="primary" expand="block" (click)="valider()">Valider<ion-spinner name="lines" *ngIf="is_loading"></ion-spinner></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

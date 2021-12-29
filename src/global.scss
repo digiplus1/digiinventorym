@@ -24,7 +24,13 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
+.modalnewimmo{
+  --max-height:90%;
+  --border-radius: 25px;
+  padding: 10px;
+  position: fixed;
+  align-items: flex-start;
+}
 .modalimmobilisation{
   --max-height:43%;
   --border-radius: 25px;

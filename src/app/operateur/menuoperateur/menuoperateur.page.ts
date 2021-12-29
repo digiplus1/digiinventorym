@@ -11,6 +11,7 @@ export class MenuoperateurPage implements OnInit {
 
   menu = [
     {title:"Acceuil",url:"menuoperateur/acceuil",icon:"home-outline",status:'active'},
+    {title:"Ajouter equipement",url:"menuoperateur/equipement",icon:"add-circle-outline",status:'none'},
     {title:"A propos",url:"menuoperateur/apropos",icon:"information-outline",status:'none'},
     {title:"Déconnexion",url:"/home/login",icon:"exit-outline"},
   ]

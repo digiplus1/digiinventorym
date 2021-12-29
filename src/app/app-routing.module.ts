@@ -23,6 +23,7 @@ const routes: Routes = [
     path: 'apropos',
     loadChildren: () => import('./operateur/apropos/apropos.module').then( m => m.AproposPageModule)
   },
+
 ];
 
 @NgModule({

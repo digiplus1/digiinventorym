@@ -8,59 +8,46 @@ import {EvolutionInventaire} from "../Model/EvolutionInventaire";
 import {ClotureOperateur} from "../Model/ClotureOperateur";
 import {LoadingController} from "@ionic/angular";
 import {Storage} from "@ionic/storage";
-import {BehaviorSubject, Subscription} from "rxjs";
-import {Network} from "@ionic-native/network/ngx";
 import {Dialogs} from "@ionic-native/dialogs/ngx";
+import {Network} from "@awesome-cordova-plugins/network/ngx";
+import {Plugins} from '@capacitor/core';
+import {Immobilisation} from "../Model/Immobilisation";
 
 @Injectable()
 export class InventaireService {
-  inventaires:Inventaire[];
-   evolutionInventaire: EvolutionInventaire;
-   offlineSubscription:Subscription;
-  onLine:boolean=false;
+  inventaires: Inventaire[];
+  evolutionInventaire: EvolutionInventaire;
+  /*  offlineSubscription:Subscription;*/
+  onLine: boolean = false;
   // @ts-ignore
-  offlineObserve:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(window.navigator.onLine);
-  inventairesoumisions:Inventairesoumision[]=[];
-  constructor(public http: HttpClient, public loginService: LoginService,private network: Network,public dialogs:Dialogs,public loadingController: LoadingController,public storage:Storage) {
-    let disconnectSubscription = this.network.onDisconnect().subscribe(()=>{
-      dialogs.alert("Network was disconnected")
-      this.onLine=false;
-    })
+  /*
+    offlineObserve:BehaviorSubject<boolean>=new BehaviorSubject<boolean>(window.navigator.onLine);
+  */
+  inventairesoumisions: Inventairesoumision[] = [];
 
+  constructor(public http: HttpClient, public loginService: LoginService, public network: Network,
+              public dialogs: Dialogs, public loadingController: LoadingController, public storage: Storage) {
 
-
-    let connectSubscription =  this.network.onConnect().subscribe(()=>{
-      dialogs.alert("we got a "+this.network.type+" connection");
-      this.onLine=true;
-    })
-
-    this.offlineSubscription=this.offlineObserve.subscribe(
-      off=>{
-        this.onLine=off;
-      }
-    )
-  setInterval(()=>{
-     this.emitofflineSubject();
-   },1000)
   }
-  emitofflineSubject() {
-    // @ts-ignore
-    this.offlineObserve.next(navigator.onLine);
-    if (this.onLine){
-      this.validerModeOffline();
-    }
-  }
+
+  /* emitofflineSubject() {
+     // @ts-ignore
+     this.offlineObserve.next(navigator.onLine);
+     if (this.onLine){
+       this.validerModeOffline();
+     }
+   }*/
   getlisteinventaire() {
     return this.http.get<Inventaire[]>(AddressIp.host + 'gestionproduit/Immobilisationinventaire/' + this.loginService.userLogin.matricule + "/" + this.loginService.userLogin.referencesession, {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
   }
 
-  valideImmo(immo:Inventairesoumision,id_inventaire:number) {
-
+  valideImmo(immo: Inventairesoumision, id_inventaire: number) {
+//this.emitofflineSubject();
     if (!this.onLine) {
-      immo.id=id_inventaire;
+      immo.id = id_inventaire;
       this.inventairesoumisions.push(immo);
       this.storage.remove('inventaire');
-      this.storage.set('inventaire',this.inventairesoumisions);
+      this.storage.set('inventaire', this.inventairesoumisions);
       this.inventaires.forEach(i => {
           if (i.referenceInventaire == immo.referenceInventaire) {
             i.quantite = immo.quantite
@@ -68,21 +55,21 @@ export class InventaireService {
           }
         }
       )
-    }else {
+    } else {
       this.doInventaire(immo, id_inventaire)
     }
   }
 
-  doInventaire(immo:Inventairesoumision,id_inventaire:number){
+  doInventaire(immo: Inventairesoumision, id_inventaire: number) {
 
     this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...',
-    }).then(l=>{
+    }).then(l => {
       l.present();
 
       return this.http.patch<Inventairesoumision>(AddressIp.host + 'gestionproduit/validationinventaire/'
-        +id_inventaire+"/",immo,
+        + id_inventaire + "/", immo,
         {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})}).subscribe(
         data => {
 
@@ -98,24 +85,23 @@ export class InventaireService {
 
         }, error => {
           l.dismiss();
-        },()=>{
+        }, () => {
         }
       )
     })
 
 
-
-
   }
 
-  validerModeOffline(){
-    this.storage.get("inventaire").then((storage:Inventairesoumision[])=>{
-      if (storage){
-        let sizeinventaire:number=0;
-        storage.forEach(i=>{
-          sizeinventaire+=1;
-          this.doInventaire(i,i.id);
-          if (sizeinventaire==storage.length){
+  validerModeOffline() {
+    this.storage.get("inventaire").then((storage: Inventairesoumision[]) => {
+      if (storage) {
+        console.log(storage)
+        let sizeinventaire: number = 0;
+        storage.forEach(i => {
+          sizeinventaire += 1;
+          this.doInventaire(i, i.id);
+          if (sizeinventaire == storage.length) {
             this.storage.remove('inventaire');
           }
         })
@@ -127,18 +113,30 @@ export class InventaireService {
     return this.http.get<EvolutionInventaire>(AddressIp.host + 'gestionproduit/Immobilisationstat/' +
       this.loginService.userLogin.matricule + "/" + this.loginService.userLogin.referencesession,
       {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})}).subscribe(
-      data=>{
-        this.evolutionInventaire=data;
-        this.evolutionInventaire.total=data.intial+data.en_cours
+      data => {
+        this.evolutionInventaire = data;
+        this.evolutionInventaire.total = data.intial + data.en_cours
       }
     );
   }
 
-  clotureInventaireOperateur(clotureOperateurs:ClotureOperateur[]){
-    return this.http.patch<Inventairesoumision>(AddressIp.host + 'gestionproduit/validationbulkinventaire/',clotureOperateurs, {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
+  clotureInventaireOperateur(clotureOperateurs: ClotureOperateur[]) {
+    return this.http.patch<Inventairesoumision>(AddressIp.host + 'gestionproduit/validationbulkinventaire/', clotureOperateurs, {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
 
   }
 
+  validerNouvelleInventaire(immobilisation: Immobilisation) {
+    return this.http.post<Immobilisation>(AddressIp.host + 'gestionproduit/immobilisationNonStock/', immobilisation, {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
+  }
+  getAllNouvelleInventaire() {
+    return this.http.get<Immobilisation[]>(AddressIp.host + 'gestionproduit/Immobilisationnonstock/'+this.loginService.userLogin.referencesession+'/'+this.loginService.userLogin.matricule+'/', {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
+  }
+  testConnexion() {
+    this.onLine = navigator.onLine;
+    if (this.onLine){
+      this.validerModeOffline();
+    }
 
+  }
 
 }
