@@ -24,18 +24,14 @@ export class ElementinventoryPage implements OnInit {
   }
 
   ngOnInit() {
-  /*  this.inventaireService.offlineSubscription=this.inventaireService.offlineObserve.subscribe(
-      off=>{
-        this.inventaireService.onLine=off;
-      }
-    )*/
+    this.getimmo();
+    this.getEvolution();
     this.inventaireService.testConnexion();
     setInterval(()=>{
       this.inventaireService.testConnexion();
     },2000)
 
-    this.getimmo();
-    this.getEvolution();
+
   }
 
   ionChange(even: any) {

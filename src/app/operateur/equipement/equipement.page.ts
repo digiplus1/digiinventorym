@@ -44,6 +44,7 @@ export class EquipementPage implements OnInit {
     /* //https://enappd.com/blog/ionic-complete-guide-barcode-qrcode-scan/140/ */
 
     this.barcodeScanner.scan().then(barcodeData => {
+      alert(barcodeData.text)
       let inven: Immobilisation = JSON.parse(barcodeData.text);
       if (inven.codeBarre) {
         this.immobilisation =inven;
