@@ -25,7 +25,6 @@ export class ElementinventoryPage implements OnInit {
 
   ngOnInit() {
     this.getimmo();
-    this.getEvolution();
     this.inventaireService.testConnexion();
     setInterval(()=>{
       this.inventaireService.testConnexion();
@@ -76,7 +75,7 @@ export class ElementinventoryPage implements OnInit {
             let invensoumission: Inventairesoumision = new Inventairesoumision();
             invensoumission.referenceimmobilisation = inventaire.immobilisation.reference;
             invensoumission.referenceInventaire = inventaire.referenceInventaire;
-            invensoumission.quantite = 1
+            invensoumission.quantite_inventorier = 1
             this.inventaireService.valideImmo(invensoumission, inventaire.id)
           }else {
             this.inventaireService.loginService.toastMessage("Immobilisation unique et deja inventoriée","info")
@@ -104,10 +103,12 @@ export class ElementinventoryPage implements OnInit {
   }
 
   getimmo() {
+    this.inventaireService.inventaires=null;
     this.inventaireService.getlisteinventaire().subscribe(
       data => {
         this.searcheItem=data;
         this.inventaireService.inventaires = data;
+        this.getEvolution();
       }
     )
   }

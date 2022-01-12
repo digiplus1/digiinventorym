@@ -4,15 +4,15 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      <ion-label class="ion-text-center">
-        <p>{{inventaireService.loginService.userLogin.nomentreprise}}</p>
-        <p>{{inventaireService.loginService.userLogin.uniteentreprise}}</p>
+      <ion-label class=" ion-margin-end">
+        <ion-icon color="primary" (click)="getAllNouvelleInventaire()" size="large" name="reader-outline"></ion-icon>
+        <ion-icon slot="end" (click)="scannerbarcode()" size="large" color="warning" class="ion-margin-start" name="scan-circle-outline"></ion-icon>
       </ion-label>
     </ion-title>
     <ion-label slot="end" class=" ion-margin-end">
-      <ion-icon color="primary" (click)="getAllNouvelleInventaire()" size="large" name="reader-outline"></ion-icon>
-      <ion-icon slot="end" (click)="scannerbarcode()" size="large" color="warning" class="ion-margin-start" name="scan-circle-outline"></ion-icon>
+      <p (click)="offLineMode()"><ion-label  [color]="inventaireService.onLine?'success':'danger'">{{inventaireService.onLine?'Online':'Offline'}}</ion-label></p>
     </ion-label>
+
   </ion-toolbar>
 
   <ion-item>

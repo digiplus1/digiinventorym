@@ -17,6 +17,7 @@ import {Immobilisation} from "../Model/Immobilisation";
 export class InventaireService {
   inventaires: Inventaire[];
   evolutionInventaire: EvolutionInventaire;
+  immobilisations:Immobilisation[]=[];
   /*  offlineSubscription:Subscription;*/
   onLine: boolean = false;
   // @ts-ignore
@@ -50,7 +51,7 @@ export class InventaireService {
       this.storage.set('inventaire', this.inventairesoumisions);
       this.inventaires.forEach(i => {
           if (i.referenceInventaire == immo.referenceInventaire) {
-            i.quantite = immo.quantite
+            i.quantite_inventorier = immo.quantite_inventorier
             i.etat = "en_cours";
           }
         }
@@ -75,7 +76,7 @@ export class InventaireService {
 
           this.inventaires.forEach(i => {
               if (i.referenceInventaire == data.referenceInventaire) {
-                i.quantite = data.quantite
+                i.quantite_inventorier = data.quantite_inventorier
                 i.etat = "en_cours";
               }
             }
@@ -131,10 +132,70 @@ export class InventaireService {
   getAllNouvelleInventaire() {
     return this.http.get<Immobilisation[]>(AddressIp.host + 'gestionproduit/Immobilisationnonstock/'+this.loginService.userLogin.referencesession+'/'+this.loginService.userLogin.matricule+'/', {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})});
   }
+
+  valideNewImmoOffline(immo: Immobilisation) {
+//this.emitofflineSubject();
+    if (!this.onLine) {
+      let immomm:Immobilisation=immo;
+      this.immobilisations.push(immomm);
+      this.storage.remove('immobilisation');
+      this.storage.set('immobilisation', this.immobilisations);
+      this.loginService.toastMessage("Enregistrement local avec succes","info")
+    }
+  }
+
+  validerNouvelleInventaireOffline(immobilisations: Immobilisation[]) {
+    this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    }).then(l => {
+      l.present();
+
+      return this.http.post<Immobilisation[]>(AddressIp.host + 'gestionproduit/ImmobilisationnonstockBulk/',
+      immobilisations, {headers: new HttpHeaders({'Authorization': 'Token ' + this.loginService.userLogin.token})}).subscribe(
+        data=>{
+          immobilisations=data;
+          this.storage.remove('immobilisation');
+          l.dismiss();
+
+        }, error => {
+          l.dismiss();
+
+        }, () => {
+          this.storage.remove('immobilisation');
+        }
+      )
+    }
+    )
+  }
+
+valideoflineModeNewImmo(){
+    this.storage.get("immobilisation").then((storage: Immobilisation[]) => {
+      if (storage) {
+        console.log(storage);
+        let sizeinventaire: number = 0;
+        storage.forEach(i=>{
+          sizeinventaire+=1
+          this.validerNouvelleInventaire(i).subscribe(
+            data=>{
+
+            }
+          )
+          if (sizeinventaire == storage.length) {
+            this.storage.remove('immobilisation');
+          }
+        })
+
+      }
+
+    })
+
+}
   testConnexion() {
     this.onLine = navigator.onLine;
     if (this.onLine){
       this.validerModeOffline();
+      this.valideoflineModeNewImmo();
     }
 
   }

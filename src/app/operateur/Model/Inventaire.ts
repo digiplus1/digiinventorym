@@ -5,6 +5,7 @@ export class Inventaire {
   etat:string;
   inventaire:number;
   referenceInventaire:string;
-  quantite:number;
+  description:string;
+  quantite_inventorier:number;
   immobilisation:Immobilisation;
 }

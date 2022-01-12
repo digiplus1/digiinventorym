@@ -18,9 +18,9 @@
     <ion-label color="danger">{{inventaireService.evolutionInventaire.en_cours/inventaireService.evolutionInventaire.total | percent}}</ion-label>
   </ion-label>
   <ion-item>
-    <ion-icon (click)="getimmo()" color="success" name="refresh-circle-outline"></ion-icon>
-    <ion-icon slot="end" (click)="scannerbarcode()" size="large" color="warning" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
-    <ion-searchbar (ionChange)="ionChange($event)" placeholder="Que cherchez vous ..."></ion-searchbar>
+    <ion-icon slot="start" (click)="getimmo()" color="success" name="refresh-circle-outline"></ion-icon>
+    <ion-icon slot="end" (click)="scannerbarcode()" color="warning" class="ion-margin-end" name="scan-circle-outline"></ion-icon>
+    <ion-searchbar (ionChange)="ionChange($event)" placeholder="Chercher"></ion-searchbar>
   </ion-item>
 </ion-header>
 
@@ -32,8 +32,8 @@
         <ion-icon slot="end"  class="ion-margin-bottom ion-padding-bottom" [color]="i.etat=='en_cours'?'success':'danger'" size="small" [name]="i.etat=='en_cours'?'checkmark-circle-outline':'close-circle-outline'"></ion-icon>
         <ion-label>
           <strong>{{i.immobilisation.libelle}}</strong>
-          <p>{{i.immobilisation.description}}</p>
-          {{i.immobilisation.marque}}
+          <p> Marque: {{i.immobilisation.marque}}</p>
+          <p *ngIf="i.description">Raison retour: {{i.description}}</p>
         </ion-label>
       </ion-item>
 

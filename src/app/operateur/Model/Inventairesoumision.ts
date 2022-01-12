@@ -1,7 +1,7 @@
 export class Inventairesoumision{
   referenceInventaire:string;
   referenceimmobilisation:string;
-  quantite:number=0;
+  quantite_inventorier:number=0;
   commentaire:string;
   longitude:number;
   lattitude:number;

@@ -22,7 +22,7 @@ export class ModalinventaireComponent implements OnInit {
     this.immo = this.navParam.get("immo");
     this.inventairesoumi.referenceInventaire = this.immo.referenceInventaire;
     this.inventairesoumi.referenceimmobilisation = this.immo.immobilisation.reference;
-    this.inventairesoumi.quantite = this.immo.quantite;
+    this.inventairesoumi.quantite_inventorier = this.immo.quantite_inventorier;
   }
 
   closeModal() {
@@ -40,10 +40,10 @@ export class ModalinventaireComponent implements OnInit {
 
   mouvement(status: string) {
     if (status == "add") {
-      this.inventairesoumi.quantite += 1;
+      this.inventairesoumi.quantite_inventorier += 1;
     } else if (status == "remove") {
-      if (this.inventairesoumi.quantite >= 0) {
-        this.inventairesoumi.quantite -= 1;
+      if (this.inventairesoumi.quantite_inventorier >= 0) {
+        this.inventairesoumi.quantite_inventorier -= 1;
       }
 
     }

@@ -8,12 +8,14 @@ export class User {
   photo!: string;
   type_utilisateur!: string;
   matricule!: string;
+  referenceuniteetp:string;
   nomentreprise:string;
   uniteentreprise:string
   is_responsable!: boolean;
   nomPartenaire!: string;
   expires_datetime_token!: Date;
   token!: string;
+  libelle_partenaire:string;
   permissions!: string[];
   admin: boolean = false;
   confirm_password!: string;

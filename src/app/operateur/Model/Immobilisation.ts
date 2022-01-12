@@ -13,6 +13,7 @@ export class Immobilisation{
   is_generique:boolean;
   is_active:boolean;
   created_at:Date;
+  reference_unite:string;
   codeBarre:string;
   referenceoperateur:string;
   referencesession:string;

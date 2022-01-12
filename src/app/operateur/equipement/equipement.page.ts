@@ -26,6 +26,11 @@ export class EquipementPage implements OnInit {
   }
 
   ngOnInit() {
+    this.immobilisation=new Immobilisation();
+    this.inventaireService.testConnexion();
+    setInterval(()=>{
+      this.inventaireService.testConnexion();
+    },2000)
   }
 
   async modalimmobilisation(cT: Immobilisation[]) {
@@ -44,12 +49,11 @@ export class EquipementPage implements OnInit {
     /* //https://enappd.com/blog/ionic-complete-guide-barcode-qrcode-scan/140/ */
 
     this.barcodeScanner.scan().then(barcodeData => {
-      alert(barcodeData.text)
       let inven: Immobilisation = JSON.parse(barcodeData.text);
       if (inven.codeBarre) {
         this.immobilisation =inven;
       } else if (barcodeData.text) {
-        inven.codeBarre = barcodeData.text;
+        this.immobilisation.codeBarre = barcodeData.text;
       }else  {
         this.inventaireService.loginService.toastMessage("Immobilisation non trouvée", "info")
       }
@@ -59,27 +63,41 @@ export class EquipementPage implements OnInit {
   }
 
   valider() {
-    this.is_loading=true;
+
     this.immobilisation.referencesession=this.inventaireService.loginService.userLogin.referencesession;
     this.immobilisation.referenceoperateur=this.inventaireService.loginService.userLogin.matricule;
-    this.inventaireService.validerNouvelleInventaire(this.immobilisation).subscribe(
-      data=>{
-        this.is_loading=false;
-        this.immobilisation=data;
-      },error => {
-        this.is_loading=false;
-      }
-    )
+    this.immobilisation.reference_unite=this.inventaireService.loginService.userLogin.referenceuniteetp;
+    if (this.inventaireService.onLine){
+      this.is_loading=true;
+      this.inventaireService.validerNouvelleInventaire(this.immobilisation).subscribe(
+        data=>{
+          this.is_loading=false;
+          this.immobilisation=new Immobilisation();
+          this.inventaireService.loginService.toastMessage("Enregistrement avec succes","success")
+        },error => {
+          this.is_loading=false;
+        }
+      )
+    }else {
+      this.inventaireService.valideNewImmoOffline(this.immobilisation);
+      this.immobilisation=new Immobilisation();
+    }
+
   }
 
 
   getAllNouvelleInventaire() {
     this.inventaireService.getAllNouvelleInventaire().subscribe(
       data=>{
+        this.inventaireService.immobilisations=data;
         if (data)
         this.modalimmobilisation(data)
       },error => {
       }
     )
+  }
+
+  offLineMode() {
+    this.inventaireService.testConnexion();
   }
 }
